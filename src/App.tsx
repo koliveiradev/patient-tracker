@@ -7,19 +7,22 @@ import { Router, Link, Route, BrowserRouter, Routes, Navigate, createBrowserRout
 
 import { router } from './router/Router';
 import { AuthServiceProvider } from './services/Auth';
+import { PatientServiceProvider } from './services/Patient';
 
 
 
 function App() {
   return (
-    <AuthServiceProvider>
-      <AuthProvider>
-        <RouterProvider router={router} />
+    <PatientServiceProvider>
+      <AuthServiceProvider>
+        <AuthProvider>
+          <RouterProvider router={router} />
 
 
-      </AuthProvider>
-    </AuthServiceProvider>
-    // <ResponsiveDrawer />
+        </AuthProvider>
+      </AuthServiceProvider>
+    </PatientServiceProvider>
+
   );
 }
 
