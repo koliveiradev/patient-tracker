@@ -9,7 +9,7 @@ import Toolbar from '@mui/material/Toolbar';
 
 import { Link, useLocation } from 'react-router-dom';
 import { useAuthService } from '../services/Auth';
-const drawerWidth = 200;
+const drawerWidth = 240;
 
 interface Props {
     /**
@@ -84,36 +84,38 @@ export function NavigationRail(props: Props) {
     }
 
     const drawer = (
-        <div className='bg-secondary text-white h-screen'>
+        <div className='bg-background h-screen py-6 pl-4'>
+            <div className='bg-secondary text-white   rounded-xl h-full shadow-sm'>
 
-            <div className='pt-16 flex flex-col items-start px-4 gap-2 h-full'>
-                {navItems.map(function (link, index) {
-                    const selected = link.url == location.pathname;
-                    return (
-                        <Link to={link.url} className='w-full'>
-                            <div className={`text-white flex flex-row gap-2 items-center px-4 py-3 w-full hover:cursor-pointer rounded-lg ${selected ? 'bg-white bg-opacity-10' : 'opacity-50'}`}>
-                                {link.icon}
-                                <div className='text-base'>
-                                    {link.name}
+                <div className='pt-16 flex flex-col items-start px-4 gap-2 h-full'>
+                    {navItems.map(function (link, index) {
+                        const selected = location.pathname.includes(link.url);
+                        return (
+                            <Link to={link.url} className='w-full'>
+                                <div className={`text-white flex flex-row gap-2 items-center px-4 py-3 w-full hover:cursor-pointer rounded-lg ${selected ? 'bg-white bg-opacity-10' : 'opacity-50'}`}>
+                                    {link.icon}
+                                    <div className='text-base'>
+                                        {link.name}
+                                    </div>
                                 </div>
+                            </Link>
+
+                        );
+                    })}
+                    <div className='flex flex-col justify-end w-full mt-auto mb-8'>
+                        <button onClick={logout} className={`text-white flex flex-row gap-2 items-center px-4 py-3 w-full hover:cursor-pointer rounded-lg bg-white bg-opacity-5`}>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3" />
+                            </svg>
+
+                            <div className='text-base'>
+                                Logout
                             </div>
-                        </Link>
-
-                    );
-                })}
-                <div className='flex flex-col justify-end w-full mt-auto mb-8'>
-                    <button onClick={logout} className={`text-white flex flex-row gap-2 items-center px-4 py-3 w-full hover:cursor-pointer rounded-lg bg-white bg-opacity-5`}>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3" />
-                        </svg>
-
-                        <div className='text-base'>
-                            Logout
-                        </div>
-                    </button>
+                        </button>
+                    </div>
                 </div>
-            </div>
 
+            </div>
         </div>
     );
 
@@ -122,9 +124,7 @@ export function NavigationRail(props: Props) {
     return (
 
         <Box
-            component="nav"
             sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
-            aria-label="mailbox folders"
         >
             {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
             <Drawer
@@ -137,7 +137,7 @@ export function NavigationRail(props: Props) {
                 }}
                 sx={{
                     display: { xs: 'block', sm: 'none' },
-                    '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+                    '& .MuiDrawer-paper': { borderWidth: 0, boxSizing: 'border-box', width: drawerWidth },
                 }}
             >
                 {drawer}
@@ -146,7 +146,8 @@ export function NavigationRail(props: Props) {
                 variant="permanent"
                 sx={{
                     display: { xs: 'none', sm: 'block' },
-                    '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+
+                    '& .MuiDrawer-paper': { borderWidth: 0, boxSizing: 'border-box', width: drawerWidth },
                 }}
                 open
             >

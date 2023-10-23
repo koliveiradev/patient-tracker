@@ -4,24 +4,29 @@ import SignUpPage from './pages/SignUp';
 import { AuthProvider, useAuth } from './components/AuthBuilder';
 import { Switch } from '@mui/material';
 import { Router, Link, Route, BrowserRouter, Routes, Navigate, createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 import { router } from './router/Router';
 import { AuthServiceProvider } from './services/Auth';
 import { PatientServiceProvider } from './services/Patient';
+import { LocalizationProvider } from '@mui/x-date-pickers';
 
 
 
 function App() {
   return (
-    <PatientServiceProvider>
-      <AuthServiceProvider>
-        <AuthProvider>
-          <RouterProvider router={router} />
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+
+      <PatientServiceProvider>
+        <AuthServiceProvider>
+          <AuthProvider>
+            <RouterProvider router={router} />
 
 
-        </AuthProvider>
-      </AuthServiceProvider>
-    </PatientServiceProvider>
+          </AuthProvider>
+        </AuthServiceProvider>
+      </PatientServiceProvider>
+    </LocalizationProvider>
 
   );
 }

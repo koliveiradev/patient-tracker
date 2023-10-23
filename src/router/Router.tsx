@@ -7,6 +7,7 @@ import { DashboardPage } from "../pages/Dashboard";
 import SignUp from "../pages/SignUp";
 import { useAuth } from "../components/AuthBuilder";
 import Login from "../pages/Login";
+import PatientPage from "../pages/Patient";
 export const UnProtectedRoute = ({ children }: any) => {
     const session = useAuth();
     if (session) {
@@ -58,6 +59,12 @@ export const router = createBrowserRouter([
             {
                 path: "/patients",
                 element: <PatientsPage />,
+
+
+            },
+            {
+                path: "/patients/:patientId",
+                element: <PatientPage />,
 
             },
             {

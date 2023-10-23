@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import { Patient } from "../models/Patient";
 import PatientDrawer from "../components/PatientDrawer";
 import { usePatientService } from "../services/Patient";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import { DataTable } from "../components/PatientTable";
+import { LineChart } from '@mui/x-charts/LineChart';
 
 
 export function PatientsPage(props: any) {
@@ -11,8 +12,11 @@ export function PatientsPage(props: any) {
     const [loading, setLoading] = useState<boolean>(true);
     const [patients, setPatients] = useState<Patient[]>([]); // [1
     const service = usePatientService();
-    const handleSetPatient = (patient: Patient | null) => {
-        setPatient(patient);
+    const navigate = useNavigate();
+
+    const handleSetPatient = (patient: Patient) => {
+        navigate("/patients/" + patient.id);
+
     }
     useEffect(
         () => {
@@ -29,8 +33,12 @@ export function PatientsPage(props: any) {
     );
 
     return <div className="p-8 h-screen w-full">
-        <PatientDrawer patient={patient} setPatient={handleSetPatient}></PatientDrawer>
-        <DataTable setPatient={handleSetPatient} patients={patients}></DataTable></div>;
+
+        <DataTable setPatient={handleSetPatient} patients={patients}></DataTable>
+    </div>;
 
 }
+
+
+
 

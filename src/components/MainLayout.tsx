@@ -28,11 +28,12 @@ export function MainLayout(props: any) {
 
 
     return (
-        <div className='bg-background'>
+        <div className='bg-background h-screen'>
             <Box sx={{ display: 'flex' }}>
                 <CssBaseline />
 
                 <NavigationRail />
+
                 <Outlet />
             </Box>
         </div>

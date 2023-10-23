@@ -13,6 +13,12 @@ export class PatientService {
         return data;
     }
 
+    async getPatient(id: string): Promise<any> {
+        const { data, error } = await supabase.from('patients').select('*').filter('id', 'eq', id).limit(1).single();
+
+        return data;
+    }
+
 }
 
 const service = new PatientService();

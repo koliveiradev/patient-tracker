@@ -2,6 +2,9 @@ import * as React from 'react';
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 import { Patient } from '../models/Patient';
 import { getAge } from '../util/dates';
+import { TableContainer, Paper, Table, TableHead, TableRow, TableCell, TableBody, Stack } from '@mui/material';
+import { BarChart } from '@mui/x-charts/BarChart';
+import { PieChart } from '@mui/x-charts/PieChart';
 
 const columns: GridColDef[] = [
     { field: 'id', headerName: 'ID', width: 70 },
@@ -46,4 +49,16 @@ export function DataTable(props: { setPatient: (patient: any) => void, patients:
             />
         </div>
     );
+}
+
+
+
+function createData(
+    name: string,
+    calories: number,
+    fat: number,
+    carbs: number,
+    protein: number,
+) {
+    return { name, calories, fat, carbs, protein };
 }
