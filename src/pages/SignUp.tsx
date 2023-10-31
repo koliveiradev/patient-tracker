@@ -3,11 +3,6 @@ import { Formik, Field, ErrorMessage } from 'formik';
 import { supabase } from '../components/AuthBuilder';
 import { AuthService, useAuthService } from "../services/Auth";
 
-
-interface PatientFormProps {
-  onSubmit: (values: any) => void;
-}
-
 // const PatientForm: React.FC<PatientFormProps> = ({ onSubmit }) => {
 export default function SignUp() {
 
@@ -22,13 +17,8 @@ export default function SignUp() {
 
   const authService = useAuthService();
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault(); // Prevent the default form submission behavior
-    console.log(e);
-  };
-
   const handleSubmit = async (e: any) => {
-    // e.preventDefault(); // Prevent the default form submission behavior
+    e.preventDefault(); // Prevent the default form submission behavior
     console.log('rocks');
     await authService.signUpWithEmail(email, password, firstName, lastName, birthDate, sex, phone, insurance);
   };

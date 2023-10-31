@@ -31,7 +31,7 @@ export class AuthService {
             email
         });
 
-        this.signInWithEmail(email, password);
+        await this.signInWithEmail(email, password);
     }
 
     async signOut() {
