@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Formik, Field, ErrorMessage } from 'formik';
 import { supabase } from '../components/AuthBuilder';
+import { AuthService, useAuthService } from "../services/Auth";
+
 
 interface PatientFormProps {
   onSubmit: (values: any) => void;
@@ -18,25 +20,17 @@ export default function SignUp() {
   const [phone, setPhone] = useState('');
   const [insurance, setInsurance] = useState('');
 
+  const authService = useAuthService();
+
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // Prevent the default form submission behavior
     console.log(e);
   };
 
-  const handleSubmit = async (values: any) => {
-    const { email, password, firstName, lastName, birthDate, sex, phone, insurance } = values;
-    const patient = {
-      id: Math.random().toString(36).substr(2, 9),
-      firstName,
-      lastName,
-      birthDate,
-      sex,
-      phone,
-      insurance,
-      email,
-    };
-    await supabase.from('patients').insert(patient);
-    onSubmit(values);
+  const handleSubmit = async (e: any) => {
+    // e.preventDefault(); // Prevent the default form submission behavior
+    console.log('rocks');
+    await authService.signUpWithEmail(email, password, firstName, lastName, birthDate, sex, phone, insurance);
   };
 
   return (
@@ -208,6 +202,7 @@ export default function SignUp() {
             type="submit"
             className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
             disabled={isSubmitting}
+            onClick={handleSubmit}
             >
             Submit
           </button>
