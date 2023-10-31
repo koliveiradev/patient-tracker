@@ -13,11 +13,22 @@ export class AuthService {
         })
     }
 
-    async signUpWithEmail(email: string, password: string) {
+    async signUpWithEmail(email: string, password: string, first_name: string, last_name: string, birth: string, sex: string, phone: string, insurance: string) {
+        console.log("I'm here");
+        
         const { data, error } = await supabase.auth.signUp({
             email,
             password,
+        });
 
+        await supabase.from('patients').insert({
+            first_name,
+            last_name,
+            birth,
+            sex,
+            phone,
+            insurance,
+            email
         });
 
         await this.signInWithEmail(email, password);
