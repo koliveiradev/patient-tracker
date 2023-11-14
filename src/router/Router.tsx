@@ -8,6 +8,7 @@ import SignUp from "../pages/SignUp";
 import { useAuth } from "../components/AuthBuilder";
 import Login from "../pages/Login";
 import PatientPage from "../pages/Patient";
+import { PatientInfoPage } from "../pages/PatientInfo";
 export const UnProtectedRoute = ({ children }: any) => {
     const session = useAuth();
     if (session) {
@@ -74,7 +75,11 @@ export const router = createBrowserRouter([
             {
                 path: "/medications",
                 element: <MedicationsPage />,
-            }
+            },
+            {
+                path: "/personalinfo",
+                element: <PatientInfoPage />,
+            },
         ]
     },
 ]);
