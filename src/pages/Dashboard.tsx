@@ -23,6 +23,8 @@ import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 import { Link } from 'react-router-dom';
 import { MainLayout } from '../components/MainLayout';
 import { Patient } from '../models/Patient';
+import { PrescriptionBox, Prescription } from '../components/PrescriptionBox'
+
 const drawerWidth = 200;
 
 interface Props {
@@ -47,10 +49,28 @@ export function DashboardPage(props: Props) {
         setMobileOpen(!mobileOpen);
     };
 
+    const p1: Prescription = {
+        name: 'Antidepressants',
+        id: 1,
+        prescribedOn: '01/20/2022',
+    };
+    const p2: Prescription = {
+        name: 'Laxatives',
+        id: 2,
+        prescribedOn: '01/21/2022',
+    };
+    const p3: Prescription = {
+        name: 'Fever Supressor',
+        id: 3,
+        prescribedOn: '01/22/2022',
+    };
 
+    const prescriptionList: Prescription[] = [p1, p2, p3];
 
     return <Box sx={{ margin:'20px', display:'flex', width:'100%'}}>
-        <Box sx={{ backgroundColor: 'white', borderRadius: '10px', padding: '20px', border: '1px solid lightgrey' }}>
+
+        <PrescriptionBox prescriptions={ prescriptionList }/>
+        {/* <Box sx={{ backgroundColor: 'white', borderRadius: '10px', padding: '20px', border: '1px solid lightgrey' }}>
             <Box display='flex' alignItems='center'>
                 <Stack direction="row" spacing={20}>
                     <Typography variant='h4' align='left'>
@@ -82,7 +102,7 @@ export function DashboardPage(props: Props) {
                 </ListItem>
                 </List>
             </Typography>
-        </Box>
+        </Box> */}
     </Box>;
 
 }
