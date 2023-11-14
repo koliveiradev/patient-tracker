@@ -8,6 +8,11 @@ import SignUp from "../pages/SignUp";
 import { useAuth } from "../components/AuthBuilder";
 import Login from "../pages/Login";
 import PatientPage from "../pages/Patient";
+<<<<<<< HEAD
+import PatientInfoPage  from "../pages/PatientInfo";
+=======
+import VisitPage from "../pages/VisitSummary";
+>>>>>>> f73e78e (Add visit summary page)
 export const UnProtectedRoute = ({ children }: any) => {
     const session = useAuth();
     if (session) {
@@ -21,7 +26,7 @@ export const IndexRoute = ({ children }: any) => {
     if (session) {
         return <Navigate to="/dashboard" />;
     } else {
-        return <Navigate to="/signup" />;
+        return <Navigate to="/login" />;
     }
 
 };
@@ -29,7 +34,7 @@ export const ProtectedRoute = ({ children }: any) => {
     const session = useAuth();
     if (!session) {
         // user is not authenticated
-        return <Navigate to="/signup" />;
+        return <Navigate to="/login" />;
     }
     return children;
 };
@@ -68,13 +73,22 @@ export const router = createBrowserRouter([
 
             },
             {
+                path: "/visits/:visitId",
+                element: <VisitPage />,
+
+            },
+            {
                 path: "/schedule",
                 element: <SchedulePage />,
             },
             {
                 path: "/medications",
                 element: <MedicationsPage />,
-            }
+            },
+            {
+                path: "/personalinfo",
+                element: <PatientInfoPage />,
+            },
         ]
     },
 ]);
