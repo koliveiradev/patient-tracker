@@ -22,7 +22,7 @@ export interface Prescription {
 
 export function PrescriptionBox(prescriptionList: PrescriptionBoxProps) {
   return (
-    <Box sx={{ backgroundColor: 'white', borderRadius: '10px', padding: '20px', border: '1px solid lightgrey' }}>
+    <Box sx={{ backgroundColor: 'white', borderRadius: '10px', padding: '20px', border: '1px solid lightgrey'}}>
       <Box display='flex' alignItems='center'>
         <Stack direction="row" spacing={20}>
           <Typography variant='h4' align='left'>

@@ -24,7 +24,8 @@ import { Link } from 'react-router-dom';
 import { MainLayout } from '../components/MainLayout';
 import { Patient } from '../models/Patient';
 import { PrescriptionBox, Prescription } from '../components/PrescriptionBox'
-
+import { supabase } from '../components/AuthBuilder';
+import { PatientService } from '../services/Patient'
 const drawerWidth = 200;
 
 interface Props {
@@ -44,69 +45,38 @@ interface Links {
 export function DashboardPage(props: Props) {
     const { window } = props;
     const [mobileOpen, setMobileOpen] = React.useState(false);
+    const [isRendered, setIsRendered] = React.useState(false);
+    const [isDoctor, setIsDoctor] = React.useState(false);
+    const [userPrescriptions, setUserPrescriptions] = React.useState([]);
 
-    const handleDrawerToggle = () => {
-        setMobileOpen(!mobileOpen);
-    };
-
-    const p1: Prescription = {
-        name: 'Antidepressants',
-        id: 1,
-        prescribedOn: '01/20/2022',
-    };
-    const p2: Prescription = {
-        name: 'Laxatives',
-        id: 2,
-        prescribedOn: '01/21/2022',
-    };
-    const p3: Prescription = {
-        name: 'Fever Supressor',
-        id: 3,
-        prescribedOn: '01/22/2022',
-    };
-
-    const prescriptionList: Prescription[] = [p1, p2, p3];
-
-    return <Box sx={{ margin:'20px', display:'flex', width:'100%'}}>
-
-        <PrescriptionBox prescriptions={ prescriptionList }/>
-        {/* <Box sx={{ backgroundColor: 'white', borderRadius: '10px', padding: '20px', border: '1px solid lightgrey' }}>
-            <Box display='flex' alignItems='center'>
-                <Stack direction="row" spacing={20}>
-                    <Typography variant='h4' align='left'>
-                        Prescriptions
-                    </Typography>
-                    <MedicationIcon />
-                </Stack>
-            </Box>
-            <Divider style={{ backgroundColor: 'grey' }} />
-            <Typography variant="body1" align="left">
-            <List>
-                <ListItem>
-                    <ListItemIcon>
-                        <FiberManualRecordIcon sx={{ fontSize: 'small' }} />
-                    </ListItemIcon>
-                    <ListItemText primary='Antidepressants' secondary='Prescribed on 01/20/2022'/>
-                </ListItem>
-                <ListItem>
-                    <ListItemIcon>
-                        <FiberManualRecordIcon sx={{ fontSize: 'small' }} />
-                    </ListItemIcon>
-                    <ListItemText primary='Fever Reducer' secondary='Prescribed on 01/20/2022'/>
-                </ListItem>
-                <ListItem>
-                    <ListItemIcon>
-                        <FiberManualRecordIcon sx={{ fontSize: 'small' }} />
-                    </ListItemIcon>
-                    <ListItemText primary='Topical Ointment' secondary='Prescribed on 01/20/2022'/>
-                </ListItem>
-                </List>
-            </Typography>
-        </Box> */}
-    </Box>;
-
+    React.useEffect(() => {
+        console.log('hello????');
+        const fetchData = async() => {
+            try {
+                const {
+                    data: { user },
+                } = await supabase.auth.getUser();
+                // default to patient if user is undefined
+                setIsDoctor(!!user?.email?.endsWith('health.gov') ?? false);
+                // console.log(user);
+                var patient_id = await serivce.getPatientID(user?.email!);
+                setUserPrescriptions(await serivce.getPrescription(patient_id));
+            } catch (error) {
+                console.log('error :( ' + error);
+            }
+        };
+        var serivce = new PatientService();
+        
+        // console.log(data);
+        fetchData();
+        setIsRendered(true);
+    }, []);
+    
+    return !isRendered ? 
+            <div>Rendering!</div> :
+            isDoctor ? 
+                <div>I am a doctor!</div> :
+                <Box sx={{ margin:'20px', display:'flex', width:'100%'}}>
+                    <PrescriptionBox prescriptions={ userPrescriptions }/>
+                </Box>;
 }
-
-
-
-
