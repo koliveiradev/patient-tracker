@@ -32,7 +32,8 @@ export default function PatientPage(props: any) {
     React.useEffect(
         () => {
             if (loading) {
-                service.getPatient(patientId!).then((p) => {
+                service.getPatientData(patientId!).then((p) => {
+
                     setPatient(p);
                     setLoading(false);
                     console.log(p);

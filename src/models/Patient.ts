@@ -1,3 +1,5 @@
+import { Visit } from "./Visit";
+
 export interface Patient {
     id: number;
     first_name: string;
@@ -5,4 +7,8 @@ export interface Patient {
     birth: string;
     sex: string;
 
+}
+
+export interface PatientData extends Patient {
+    visits: Visit[];
 }

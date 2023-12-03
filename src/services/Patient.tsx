@@ -14,10 +14,17 @@ export class PatientService {
     }
 
     async getPatient(id: string): Promise<any> {
-        const { data, error } = await supabase.from('patients').select('*').filter('id', 'eq', id).limit(1).single();
+        const { data, error } = await supabase.from('patients').select('* events()').filter('id', 'eq', id).limit(1).single();
 
         return data;
     }
+
+    async getPatientData(id: string): Promise<any> {
+        const { data, error } = await supabase.from('patients').select('*, events ( *, diagnoses ( *, illness:illness_id ( * ), prescriptions (*,medication:medication_id(*)) ) )').filter('id', 'eq', id).limit(1).single();
+
+        return data;
+    }
+
 
 }
 
