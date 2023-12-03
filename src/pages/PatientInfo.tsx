@@ -14,7 +14,10 @@ export function PatientInfoPage(props: any) {
     const submitCallback = async (info: any) => {
         //await authService.signUpWithEmail(info.email, info.password, info.firstName, info.lastName, info.birthDate, info.sex, info.phone, info.insurance);
     };
-    return <PatientInfoForm submitCallback={submitCallback} toggleable={true}/>
+
+    return <div className="m-6 rounded-2xl sm:w-full sm:max-w-sm bg-white h-full p-8 border border-gray-300">
+            <PatientInfoForm submitCallback={submitCallback} toggleable={true}/>
+           </div>;
 
 }
 

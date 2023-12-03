@@ -29,8 +29,6 @@ export function usePatientService() {
     return useContext(authServiceContext);
 }
 
-
-
 export function PatientServiceProvider(props: any) {
 
 
