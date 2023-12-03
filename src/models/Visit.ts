@@ -8,7 +8,7 @@ export interface Visit {
     start_time: string;
     end_time: string;
     type: string;
-    diagnosis: Diagnosis[];
+    diagnoses: Diagnosis[];
 }
 
 

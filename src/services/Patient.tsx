@@ -21,7 +21,7 @@ export class PatientService {
 
     async getPatientData(id: string): Promise<any> {
         const { data, error } = await supabase.from('patients').select('*, events ( *, diagnoses ( *, illness:illness_id ( * ), prescriptions (*,medication:medication_id(*)) ) )').filter('id', 'eq', id).limit(1).single();
-
+        console.log(data);
         return data;
     }
 

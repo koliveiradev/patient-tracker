@@ -5,6 +5,6 @@ export interface Prescription {
     visit_id: number;
     start_date: string;
     end_date: string;
-    medicine: Medication;
+    medication: Medication;
     notes: string;
 }

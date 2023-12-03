@@ -3,7 +3,7 @@ import { Prescription } from "./Prescription";
 export interface Diagnosis {
     id: number;
     illness: Illness;
-    prescription: Prescription[];
+    prescriptions: Prescription[];
 }
 
 export interface Illness {
