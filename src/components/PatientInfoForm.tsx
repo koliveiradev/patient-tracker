@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Formik, Field, ErrorMessage } from 'formik';
-import { supabase } from '../components/AuthBuilder';
+import { supabase } from './AuthBuilder';
+import { PatientService } from '../services/Patient'
 import { AuthService, useAuthService } from "../services/Auth";
 
 // const PatientForm: React.FC<PatientFormProps> = ({ onSubmit }) => {
@@ -16,11 +17,34 @@ export default function PatientInfoForm(props: {submitCallback: (info:any)=>Prom
   const [phone, setPhone] = useState('');
   const [insurance, setInsurance] = useState('');
 
+  useEffect(()=> {
+    const fetchData = async() => {
+      try {
+          const {
+              data: { user },
+          } = await supabase.auth.getUser();
+
+          let patient = await service.getPatientByEmail(user?.email??"");
+          setEmail(patient?.email??"");
+          setFirstName(patient?.first_name??"");
+          setLastName(patient?.last_name??"");
+          setBirthDate(patient?.birth??"");
+          setSex(patient?.sex??"");
+          setPhone(patient?.phone??"");
+          setInsurance(patient?.insurance??"");
+  
+      } catch (error) {
+          console.log('error :( ' + error);
+      }
+  };
+  var service = new PatientService();
+  fetchData();
+  }, []);
+
   const [mode, setMode] = useState(toggleable? 'view' : 'edit');
 
   const handleSubmit = async (e: any) => {
     e.preventDefault(); // Prevent the default form submission behavior
-    console.log('rocks');
     if (toggleable) {
       setMode(mode == 'view'? 'edit':'view');
     }
@@ -56,7 +80,7 @@ export default function PatientInfoForm(props: {submitCallback: (info:any)=>Prom
           <form className="space-y-6">
           <div className="flex flex-col">
             <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">Email</label>
-              {mode == 'edit'? 
+              {!toggleable? 
               <Field
                 id="email"
                 name="email"
@@ -73,9 +97,10 @@ export default function PatientInfoForm(props: {submitCallback: (info:any)=>Prom
                 ) : null}
           </div>
 
+          {!toggleable? 
           <div className="flex flex-col">
             <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">Password</label>
-              {mode == 'edit'? 
+              
               <Field
               id="password"
               name="password"
@@ -85,12 +110,12 @@ export default function PatientInfoForm(props: {submitCallback: (info:any)=>Prom
               autoComplete="current-password"
               className="block w-full px-4 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               required
-              /> : 
-              <label>{password}</label>}
+              /> 
             {errors.password && touched.password ? (
                 <div className="text-red-500">{errors.password}</div>
                 ) : null}
           </div>
+          : <></>}
 
           <div className="flex flex-col">
             <label htmlFor="firstName" className="block text-sm font-medium leading-6 text-gray-900">First Name</label>
@@ -160,7 +185,7 @@ export default function PatientInfoForm(props: {submitCallback: (info:any)=>Prom
               <option value="male">Male</option>
               <option value="female">Female</option>
             </Field> :
-            <label>{birthDate}</label>}
+            <label>{sex}</label>}
             {errors.sex && touched.sex ? (
                 <div className="text-red-500">{errors.sex}</div>
                 ) : null}

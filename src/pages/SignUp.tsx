@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Formik, Field, ErrorMessage } from 'formik';
 import { supabase } from '../components/AuthBuilder';
 import { AuthService, useAuthService } from "../services/Auth";
-import PatientInfoForm from '../components/PatientInfo';
+import PatientInfoForm from '../components/PatientInfoForm';
 
 // const PatientForm: React.FC<PatientFormProps> = ({ onSubmit }) => {
 export default function SignUp() {
