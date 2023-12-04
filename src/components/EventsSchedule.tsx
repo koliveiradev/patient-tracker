@@ -5,6 +5,7 @@ import TimelineSeparator from '@mui/lab/TimelineSeparator';
 import TimelineConnector from '@mui/lab/TimelineConnector';
 import TimelineContent from '@mui/lab/TimelineContent';
 import TimelineDot from '@mui/lab/TimelineDot';
+import { capitalize } from '@mui/material';
 
 import { getDayString, getTimeOfDay } from '../util/dates';
    
@@ -20,11 +21,11 @@ export function EventsSchedule(props: { events: Event[] }) {
                     </h1>
                 </div>
 
-                <>
+                {props.events == null ? <>You have no upcoming appointments.</> : <>
                     {props.events.map((event) => {
-                        return <>
+                        return <div key={event.id}>
                             <Timeline
-                                sx={{
+                                sx={{ 
                                     [`& .${timelineItemClasses.root}:before`]: {
                                         flex: 0,
                                         padding: 0,
@@ -34,28 +35,28 @@ export function EventsSchedule(props: { events: Event[] }) {
 
                                 <TimelineItem>
 
-
                                     <TimelineSeparator>
                                         <TimelineDot variant="outlined" />
                                         <TimelineConnector />
                                     </TimelineSeparator>
 
                                     <TimelineContent> 
-                                    <div className='font-semibold'>
-                                        {event.type}
-                                    </div>
-                                    <div className='font-medium'>
-                                        {getDayString(event.start_time)} | { getTimeOfDay(event.start_time)} - {getTimeOfDay(event.end_time)}
-                                    </div>
-                                    <div className='font-normal'>
-                                        Dr. {event.doctor_first_name} {event.doctor_last_name}
-                                    </div>
+                                        <div className='font-semibold'>
+                                            {capitalize(event.type)}
+                                        </div>
+                                        <div className='font-medium'>
+                                            {getDayString(new Date(event.start_time))} | { getTimeOfDay(new Date(event.start_time))} - {getTimeOfDay(new Date(event.end_time))}
+                                        </div>
+                                        <div className='font-normal'>
+                                            Dr. {event.first_name} {event.last_name}
+                                        </div>
                                     </TimelineContent>
+
                                 </TimelineItem>
                             </Timeline>
-                        </>
+                        </div>
                     })}
-                </>
+                </>}
 
 
             </div>
