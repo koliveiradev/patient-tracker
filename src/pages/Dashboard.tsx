@@ -3,6 +3,9 @@ import { Event } from '../models/Event';
 import { EventsSchedule } from '../components/EventsSchedule';
 import { useState, useEffect } from 'react';
 import { usePatientService } from '../services/Patient';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
+
 
 
 
@@ -65,7 +68,13 @@ export function DashboardPage(props: Props) {
                 <h1 className='text-2xl font-semibold'>Dashboard</h1>
                 <div className='border-b border-gray-300 w-full mb-8 mt-4' />
             </div>
-            {loading ? <>Loading...</> : <EventsSchedule events={events!}/>}
+            {loading ? 
+                <Box sx={{ display: 'flex' }}>
+                    <CircularProgress />
+                </Box>
+                : 
+                <EventsSchedule events={events!}/>
+            }
         </div>;
     </>
 
