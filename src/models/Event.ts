@@ -1,10 +1,10 @@
 export interface Event { // View of events joined with associated Doctor
     id: number;
     patient_id: number;
-    start_time: Date;
-    end_time: Date;
+    start_time: string;
+    end_time: string;
     type: string;
     doctor_id: number;
-    doctor_first_name: string;
-    doctor_last_name: string;
+    first_name: string; // doctor first name, last name
+    last_name: string;
 }
