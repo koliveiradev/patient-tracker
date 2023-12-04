@@ -20,7 +20,9 @@ export function EventsSchedule(props: { events: Event[] }) {
                     </h1>
                 </div>
 
-                {props.events == null ? <>You have no upcoming appointments.</> : <>
+                {(props.events == null || 
+                    props.events.length == 0 
+                    )? <>You have no upcoming appointments.</> : <>
                     {props.events.map((event) => {
                         return <div key={event.id}>
                             <Timeline
