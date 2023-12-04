@@ -8,6 +8,8 @@ import { AuthService, useAuthService } from "../services/Auth";
 export default function PatientInfoForm(props: {submitCallback: (info:any)=>Promise<void>, toggleable: boolean}) {
   const {submitCallback, toggleable} = {...props}
 
+  let service = usePatientService();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [firstName, setFirstName] = useState('');
@@ -37,7 +39,6 @@ export default function PatientInfoForm(props: {submitCallback: (info:any)=>Prom
           console.log('error :( ' + error);
       }
   };
-  var service = usePatientService();
   fetchData();
   }, []);
 
