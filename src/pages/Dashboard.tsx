@@ -18,7 +18,47 @@ import Typography from '@mui/material/Typography';
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 import { Link } from 'react-router-dom';
 import { MainLayout } from '../components/MainLayout';
-import { Patient } from '../models/Patient';
+import { Event } from '../models/Event';
+import { EventsSchedule } from '../components/EventsSchedule';
+import { useState, useEffect } from 'react';
+
+
+
+
+const sampleEvents = [
+    {
+        id: 1,
+        patient_id: 1,
+        start_time: new Date('2021-10-01T10:00:00'),
+        end_time: new Date('2021-10-01T11:00:00'),
+        type: 'Appointment',
+        doctor_id: 1,
+        doctor_first_name: 'Sarah',
+        doctor_last_name: 'Surgeon',
+    } as Event,
+    {
+        id: 2,
+        patient_id: 2,
+        start_time: new Date('2021-10-02T10:00:00'),
+        end_time: new Date('2021-10-02T11:00:00'),
+        type: 'Random',
+        doctor_id: 2,
+        doctor_first_name: 'Daniel',
+        doctor_last_name: 'Doctor',
+    } as Event,
+    {
+        id: 3,
+        patient_id: 3,
+        start_time: new Date('2021-10-03T10:00:00'),
+        end_time: new Date('2021-10-03T13:00:00'),
+        type: 'Misc.',
+        doctor_id: 3,
+        doctor_first_name: 'Phyllis',
+        doctor_last_name: 'Physician',
+    } as Event,
+];
+
+
 const drawerWidth = 200;
 
 interface Props {
@@ -38,14 +78,23 @@ interface Links {
 export function DashboardPage(props: Props) {
     const { window } = props;
     const [mobileOpen, setMobileOpen] = React.useState(false);
+    const [events, setEvents] = useState<Event[]>([]);
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
     };
 
 
+    useEffect(() => {
+        setEvents(sampleEvents);
+        console.log("set events");
+    }, []);
 
-    return <></>;
+
+
+    return <>
+        <EventsSchedule events={events}/>
+    </>;
 
 }
 
