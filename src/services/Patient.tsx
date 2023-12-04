@@ -29,6 +29,11 @@ export class DatabaseService {
         const { data, error } = await supabase.from('events').select('*, diagnoses ( *, illness:illness_id ( * ), prescriptions (*,medication:medication_id(*)) ) ').filter('id', 'eq', id).limit(1).single();
         return data;
     }
+    async getVisits(): Promise<any> {
+        const { data, error } = await supabase.from('events').select('*, patient:patient_id(*), diagnoses ( *, illness:illness_id ( * ), prescriptions (*,medication:medication_id(*)) ) ');
+        return data;
+    }
+
 
     async getMedications(): Promise<any> {
         const { data, error } = await supabase.from('medications').select('*');
