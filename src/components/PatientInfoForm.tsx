@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Formik, Field, ErrorMessage } from 'formik';
 import { supabase } from './AuthBuilder';
-import { PatientService } from '../services/Patient'
+import { usePatientService } from '../services/Patient'
 import { AuthService, useAuthService } from "../services/Auth";
 
 // const PatientForm: React.FC<PatientFormProps> = ({ onSubmit }) => {
@@ -37,7 +37,7 @@ export default function PatientInfoForm(props: {submitCallback: (info:any)=>Prom
           console.log('error :( ' + error);
       }
   };
-  var service = new PatientService();
+  var service = usePatientService();
   fetchData();
   }, []);
 
