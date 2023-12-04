@@ -41,7 +41,7 @@ export default function PatientPage(props: any) {
         });
         return diagnoses;
 
-        return [];
+
     }
     React.useEffect(
         () => {
