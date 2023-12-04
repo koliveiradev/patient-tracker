@@ -12,8 +12,7 @@ import { getDayString, getTimeOfDay } from '../util/dates';
 
 export function EventsSchedule(props: { events: Event[] }) {
 
-    return (<div className='p-12 w-full'>
-
+    return (<>            
             <div className='  border border-gray-200 rounded-lg w-full p-4 bg-white mt-8 '>
                 <div className='flex flex-row gap-8 border-b border-gray-300 mb-4 pb-3 items-center '>
                     <h1 className='text-xl font-semibold '>
@@ -57,9 +56,7 @@ export function EventsSchedule(props: { events: Event[] }) {
                         </div>
                     })}
                 </>}
-
-
             </div>
-        </div>
+        </>
     );
 }
