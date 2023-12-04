@@ -24,7 +24,6 @@ export function PatientsPage(props: any) {
                 service.getPatients().then((patients) => {
                     setPatients(patients);
                     setLoading(false);
-                    console.log(patients);
                 });
             }
 
@@ -33,7 +32,10 @@ export function PatientsPage(props: any) {
     );
 
     return <div className="p-8 h-screen w-full">
-
+        <div>
+            <h1 className='text-2xl font-semibold'>Patients</h1>
+            <div className='border-b border-gray-300 w-full mb-8 mt-4' />
+        </div>
         <DataTable setPatient={handleSetPatient} patients={patients}></DataTable>
     </div>;
 

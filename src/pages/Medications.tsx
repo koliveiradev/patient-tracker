@@ -8,7 +8,7 @@ import { DataTable } from "../components/MedicationTable"; // make a new DataTab
 export function MedicationsPage(props: any) {
     const [medication, setMedication] = useState<Medication | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
-    const [medications, setMedications] = useState<Medication[]>([]); 
+    const [medications, setMedications] = useState<Medication[]>([]);
     const service = useMedicationService();
     const navigate = useNavigate();
 
@@ -22,7 +22,6 @@ export function MedicationsPage(props: any) {
                 service.getMedications().then((medications) => {
                     setMedications(medications);
                     setLoading(false);
-                    console.log(medications);
                 });
             }
 
@@ -31,7 +30,10 @@ export function MedicationsPage(props: any) {
     );
 
     return <div className="p-8 h-screen w-full">
-
+        <div>
+            <h1 className='text-2xl font-semibold'>Medications</h1>
+            <div className='border-b border-gray-300 w-full mb-8 mt-4' />
+        </div>
         <DataTable setPatient={handleSetPatient} medications={medications}></DataTable>
     </div>;
 
