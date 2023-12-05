@@ -51,7 +51,6 @@ export function DashboardPage(props: Props) {
     const serivce = usePatientService();
     
     React.useEffect(() => {
-        console.log('hello????');
         const fetchData = async() => {
             try {
                 const {
