@@ -34,14 +34,18 @@ export function PrescriptionBox(prescriptionList: PrescriptionBoxProps) {
       <Divider style={{ backgroundColor: 'grey' }} />
       <Typography variant="body1" align="left">
         <List>
-          {prescriptionList.prescriptions.map((prescription: Prescription) => (
-            <ListItem key={prescription.id}>
-              <ListItemIcon>
-                <FiberManualRecordIcon sx={{ fontSize: 'small' }} />
-              </ListItemIcon>
-              <ListItemText primary={prescription.name} secondary={`Prescribed on ${prescription.prescribedOn}`} />
-            </ListItem>
-          ))}
+          {prescriptionList.prescriptions.length === 0 ? (
+            <div>You have no prescriptions.</div>
+          ) : (
+            prescriptionList.prescriptions.map((prescription: Prescription) => (
+              <ListItem key={prescription.id}>
+                <ListItemIcon>
+                  <FiberManualRecordIcon sx={{ fontSize: 'small' }} />
+                </ListItemIcon>
+                <ListItemText primary={prescription.name} secondary={`Prescribed on ${prescription.prescribedOn}`} />
+              </ListItem>
+            ))
+          )}
         </List>
       </Typography>
     </Box>
