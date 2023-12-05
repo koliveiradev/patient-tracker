@@ -7,7 +7,7 @@ import { DataTable } from "../components/PatientTable";
 import { LineChart } from '@mui/x-charts/LineChart';
 import PatientInfoForm from "../components/PatientInfoForm";
 
-export default function PatientInfoPage(props: any) {
+export function PatientInfoPage(props: any) {
     const patientService = usePatientService();
     const submitCallback = async (info: any) => {
         await patientService.updatePatientInfo(info.email, info.firstName, info.lastName, info.birthDate, info.sex, info.phone, info.insurance);
