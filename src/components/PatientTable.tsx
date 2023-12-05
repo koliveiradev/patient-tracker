@@ -32,11 +32,12 @@ export function DataTable(props: { setPatient: (patient: any) => void, patients:
     }
 
     return (
-        <div style={{ width: '100%' }} className='rounded-2xl h-96'>
+        <div style={{ width: '100%' }} className=''>
 
             <DataGrid
+                autoHeight
                 rows={props.patients}
-                className='bg-white rounded-2xl'
+                className='bg-white'
                 columns={columns}
                 onRowClick={handleRowClick}
 

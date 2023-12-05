@@ -3,7 +3,13 @@ import { supabase } from "../components/AuthBuilder";
 import { createContext, useContext } from "react";
 import { Patient } from "../models/Patient";
 
+<<<<<<< HEAD
 export class PatientService {
+=======
+
+
+export class DatabaseService {
+>>>>>>> main
 
     async getPatients(): Promise<any> {
         const { data, error } = await supabase.from('patients').select('*');
@@ -12,8 +18,8 @@ export class PatientService {
     }
 
     async getPatient(id: string): Promise<any> {
-        const { data, error } = await supabase.from('patients').select('*').filter('id', 'eq', id).limit(1).single();
-        
+        const { data, error } = await supabase.from('patients').select('* events()').filter('id', 'eq', id).limit(1).single();
+
         return data;
     }
     
@@ -34,11 +40,40 @@ export class PatientService {
         return data?.map((e, idx) => ({name: e.medications.name, key: idx, prescribedOn: e.start_date}));             
     }
 
+    async getPatientData(id: string): Promise<any> {
+        const { data, error } = await supabase.from('patients').select('*, events ( *, diagnoses ( *, illness:illness_id ( * ), prescriptions (*,medication:medication_id(*)) ) )').filter('id', 'eq', id).limit(1).single();
+        console.log(data);
+        return data;
+    }
+
+    async getVisit(id: string): Promise<any> {
+        const { data, error } = await supabase.from('events').select('*, diagnoses ( *, illness:illness_id ( * ), prescriptions (*,medication:medication_id(*)) ) ').filter('id', 'eq', id).limit(1).single();
+        return data;
+    }
+    async getVisits(): Promise<any> {
+        const { data, error } = await supabase.from('events').select('*, patient:patient_id(*), diagnoses ( *, illness:illness_id ( * ), prescriptions (*,medication:medication_id(*)) ) ');
+        return data;
+    }
+
+
+    async getMedications(): Promise<any> {
+        const { data, error } = await supabase.from('medications').select('*');
+
+        return data;
+    }
+
+    async getIllnesses(): Promise<any> {
+        const { data, error } = await supabase.from('illnesses').select('*');
+
+        return data;
+    }
+
+
 }
 
-const service = new PatientService();
+const service = new DatabaseService();
 
-const authServiceContext = createContext<PatientService>(service);
+const authServiceContext = createContext<DatabaseService>(service);
 
 export function usePatientService() {
     return useContext(authServiceContext);
