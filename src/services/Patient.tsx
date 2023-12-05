@@ -3,13 +3,9 @@ import { supabase } from "../components/AuthBuilder";
 import { createContext, useContext } from "react";
 import { Patient } from "../models/Patient";
 
-<<<<<<< HEAD
-export class PatientService {
-=======
 
 
 export class DatabaseService {
->>>>>>> main
 
     async getPatients(): Promise<any> {
         const { data, error } = await supabase.from('patients').select('*');

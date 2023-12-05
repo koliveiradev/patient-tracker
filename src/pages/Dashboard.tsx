@@ -25,7 +25,7 @@ import { MainLayout } from '../components/MainLayout';
 import { Patient } from '../models/Patient';
 import { PrescriptionBox, Prescription } from '../components/PrescriptionBox'
 import { supabase } from '../components/AuthBuilder';
-import { PatientService } from '../services/Patient'
+import { usePatientService } from '../services/Patient'
 const drawerWidth = 200;
 
 interface Props {
@@ -48,6 +48,7 @@ export function DashboardPage(props: Props) {
     const [isRendered, setIsRendered] = React.useState(false);
     const [isDoctor, setIsDoctor] = React.useState(false);
     const [userPrescriptions, setUserPrescriptions] = React.useState([]);
+    var serivce = usePatientService();
 
     React.useEffect(() => {
         console.log('hello????');
@@ -65,7 +66,7 @@ export function DashboardPage(props: Props) {
                 console.log('error :( ' + error);
             }
         };
-        var serivce = new PatientService();
+        
         
         // console.log(data);
         fetchData();
