@@ -1,13 +1,4 @@
 import * as React from 'react';
-import { Event } from '../models/Event';
-import { EventsSchedule } from '../components/EventsSchedule';
-import { useState, useEffect } from 'react';
-import { usePatientService } from '../services/Patient';
-import CircularProgress from '@mui/material/CircularProgress';
-
-
-
-
 import AppBar from '@mui/material/AppBar';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import Box from '@mui/material/Box';
@@ -32,9 +23,12 @@ import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 import { Link } from 'react-router-dom';
 import { MainLayout } from '../components/MainLayout';
 import { Patient } from '../models/Patient';
+import { Event } from '../models/Event';
 import { PrescriptionBox, Prescription } from '../components/PrescriptionBox'
 import { supabase } from '../components/AuthBuilder';
 import { DatabaseService } from '../services/Patient'
+import { EventsSchedule } from '../components/EventsSchedule';
+import { CircularProgress } from '@mui/material';
 const drawerWidth = 200;
 
 interface Props {
@@ -55,10 +49,8 @@ export function DashboardPage(props: Props) {
     const { window } = props;
     const [mobileOpen, setMobileOpen] = React.useState(false);
     const [isRendered, setIsRendered] = React.useState(false);
-    const [loading, setLoading] = React.useState(true);
     const [isDoctor, setIsDoctor] = React.useState(false);
     const [userPrescriptions, setUserPrescriptions] = React.useState([]);
-    const [userId, setUserId] = React.useState<number | null>(null);
     const [events, setEvents] = React.useState<Event[]>([]);
 
     React.useEffect(() => {
@@ -72,7 +64,12 @@ export function DashboardPage(props: Props) {
                 setIsDoctor(!!user?.email?.endsWith('health.gov') ?? false);
                 // console.log(user);
                 var patient_id = await serivce.getPatientID(user?.email!);
+                console.log(patient_id);
+
                 setUserPrescriptions(await serivce.getPrescription(patient_id));
+
+                const upcomingEvents = await serivce.getUpcomingEvents(patient_id);
+                setEvents(upcomingEvents);
             } catch (error) {
                 console.log('error :( ' + error);
             }
@@ -83,24 +80,6 @@ export function DashboardPage(props: Props) {
         fetchData();
         setIsRendered(true);
     }, []);
-
-    useEffect(
-        () => {
-            if (loading) {
-                const service = new DatabaseService();
-                service.getLoggedInPatient().then((patient) => {
-                    setUserId(patient);                
-                    service.getUpcomingEvents(patient!).then((events) => {
-                        setEvents(events);
-                        console.log("events", events);
-                        setLoading(false);
-                    });
-                    
-                });
-            }
-        }, []
-        );
-    
 
     return <>
         <div className="p-8 h-screen w-full">
@@ -123,6 +102,5 @@ export function DashboardPage(props: Props) {
             }
         </div>;
     </>
-
-
+                
 }
