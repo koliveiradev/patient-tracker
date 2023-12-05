@@ -19,11 +19,6 @@ export class DatabaseService {
         return data;
     }
     
-    async getPatientID(email: string): Promise<any> {
-        const { data, error } = await supabase.from('patients').select('*').filter('email', 'eq', email).limit(1).single();
-        return data.id;
-    }
-
     async getPrescription(id: string): Promise<any> {
         // the type from the filter is incorrect, and believes that medications is an
         // array, rather than a single object. We must ignore its type signature unfortunately
