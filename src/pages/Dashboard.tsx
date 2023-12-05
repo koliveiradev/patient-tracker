@@ -25,7 +25,7 @@ import { MainLayout } from '../components/MainLayout';
 import { Patient } from '../models/Patient';
 import { PrescriptionBox, Prescription } from '../components/PrescriptionBox'
 import { supabase } from '../components/AuthBuilder';
-import { PatientService } from '../services/Patient'
+import { DatabaseService } from '../services/Patient'
 const drawerWidth = 200;
 
 interface Props {
@@ -65,7 +65,7 @@ export function DashboardPage(props: Props) {
                 console.log('error :( ' + error);
             }
         };
-        var serivce = new PatientService();
+        var serivce = new DatabaseService();
         
         // console.log(data);
         fetchData();
