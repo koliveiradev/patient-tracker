@@ -23,9 +23,13 @@ import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 import { Link } from 'react-router-dom';
 import { MainLayout } from '../components/MainLayout';
 import { Patient } from '../models/Patient';
+import { Event } from '../models/Event';
 import { PrescriptionBox, Prescription } from '../components/PrescriptionBox'
 import { supabase } from '../components/AuthBuilder';
 import { usePatientService } from '../services/Patient'
+import { DatabaseService } from '../services/Patient'
+import { EventsSchedule } from '../components/EventsSchedule';
+import { CircularProgress } from '@mui/material';
 const drawerWidth = 200;
 
 interface Props {
@@ -49,6 +53,7 @@ export function DashboardPage(props: Props) {
     const [isDoctor, setIsDoctor] = React.useState(false);
     const [userPrescriptions, setUserPrescriptions] = React.useState([]);
     var serivce = usePatientService();
+    const [events, setEvents] = React.useState<Event[]>([]);
 
     React.useEffect(() => {
         console.log('hello????');
@@ -61,23 +66,42 @@ export function DashboardPage(props: Props) {
                 setIsDoctor(!!user?.email?.endsWith('health.gov') ?? false);
                 // console.log(user);
                 var patient_id = await serivce.getPatientID(user?.email!);
+                console.log(patient_id);
+
                 setUserPrescriptions(await serivce.getPrescription(patient_id));
+
+                const upcomingEvents = await serivce.getUpcomingEvents(patient_id);
+                setEvents(upcomingEvents);
             } catch (error) {
                 console.log('error :( ' + error);
             }
         };
         
-        
         // console.log(data);
         fetchData();
         setIsRendered(true);
     }, []);
-    
-    return !isRendered ? 
-            <div>Rendering!</div> :
-            isDoctor ? 
-                <div>I am a doctor!</div> :
-                <Box sx={{ margin:'20px', display:'flex', width:'100%'}}>
-                    <PrescriptionBox prescriptions={ userPrescriptions }/>
-                </Box>;
+
+    return <>
+        <div className="p-8 h-screen w-full">
+            <div>
+                <h1 className='text-2xl font-semibold'>Dashboard</h1>
+                <div className='border-b border-gray-300 w-full mb-8 mt-4' />
+            </div>
+            {!isRendered ? 
+                <Box sx={{ display: 'flex' }}>
+                    <CircularProgress />
+                </Box>
+                : 
+                <>
+                    <Box sx={{ margin:'20px', display:'flex', width:'100%'}}>
+                        <PrescriptionBox prescriptions={ userPrescriptions }/>
+                    </Box>
+
+                    <EventsSchedule events={events!}/>
+                </>
+            }
+        </div>;
+    </>
+                
 }
