@@ -23,7 +23,7 @@ export const IndexRoute = ({ children }: any) => {
     if (session) {
         return <Navigate to="/dashboard" />;
     } else {
-        return <Navigate to="/signup" />;
+        return <Navigate to="/login" />;
     }
 
 };
@@ -31,7 +31,7 @@ export const ProtectedRoute = ({ children }: any) => {
     const session = useAuth();
     if (!session) {
         // user is not authenticated
-        return <Navigate to="/signup" />;
+        return <Navigate to="/login" />;
     }
     return children;
 };
