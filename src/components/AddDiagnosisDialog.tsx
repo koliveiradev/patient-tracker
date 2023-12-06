@@ -16,8 +16,7 @@ export interface DiagnosisEditForm {
 }
 
 export interface DiagnosisSubmitForm {
-    diagnosis_id?: number;
-    prescription_id?: number;
+
     illness: number;
     medication: number;
     start_date: Date;
@@ -31,12 +30,12 @@ const freshForm = {
     end_date: new Date(),
     notes: ''
 };
-export function AddDiagnosisDialog(props: { onSubmit: (form: DiagnosisSubmitForm) => void, original?: DiagnosisEditForm | null }) {
+export function AddDiagnosisDialog(props: { onSubmit: (form: DiagnosisSubmitForm) => void }) {
     const [open, setOpen] = React.useState(false);
     const [loading, setLoading] = React.useState(true);
     const [illnesses, setIllnesses] = React.useState<Illness[]>([]);
     const [medications, setMedications] = React.useState<Medication[]>([]);
-    const [form, setForm] = React.useState<DiagnosisEditForm>(props.original ?? freshForm);
+    const [form, setForm] = React.useState<DiagnosisEditForm>(freshForm);
     const service = usePatientService();
 
 
@@ -66,7 +65,7 @@ export function AddDiagnosisDialog(props: { onSubmit: (form: DiagnosisSubmitForm
 
     const handleClose = () => {
 
-        setForm(props.original ?? freshForm);
+        setForm(freshForm);
 
 
         setOpen(false);
@@ -79,9 +78,9 @@ export function AddDiagnosisDialog(props: { onSubmit: (form: DiagnosisSubmitForm
 
             start_date: form.start_date, end_date: form.end_date, notes: form.notes
         });
-        if (!props.original) {
-            setForm(freshForm);
-        }
+
+        setForm(freshForm);
+
         setOpen(false);
     }
 
