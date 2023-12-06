@@ -1,13 +1,4 @@
-import { ViewState } from '@devexpress/dx-react-scheduler';
-import {
-    Scheduler,
-    DayView,
-    Appointments,
-    MonthView,
-    DateNavigator,
-    TodayButton,
-    Toolbar,
-} from '@devexpress/dx-react-scheduler-material-ui';
+
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Patient } from '../models/Patient';
@@ -28,7 +19,7 @@ export function SchedulePage(props: any) {
     useEffect(
         () => {
             if (loading) {
-                service.getVisits().then((visits) => {
+                service.getVisits().then((visits: Visit[]) => {
                     setVisits(visits);
                     setLoading(false);
                 });
@@ -37,7 +28,7 @@ export function SchedulePage(props: any) {
 
         }
     );
-    const events = visits.map((v) => {
+    const events = visits.map((v: any) => {
         return {
             startDate: v.start_time,
             endDate: v.end_time,
@@ -51,7 +42,7 @@ export function SchedulePage(props: any) {
         </div>
         <div className='shadow border border-gray-300 rounded-lg p-1 bg-white'>
 
-            {
+            {/* {
                 <Scheduler
                     data={events}
                 >
@@ -67,9 +58,11 @@ export function SchedulePage(props: any) {
                     <TodayButton />
                     <Appointments />
                 </Scheduler>
-            }
+            } */}
         </div>
     </div>;
 
 }
+
+
 

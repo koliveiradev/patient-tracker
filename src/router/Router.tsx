@@ -8,7 +8,7 @@ import SignUp from "../pages/SignUp";
 import { useAuth } from "../components/AuthBuilder";
 import Login from "../pages/Login";
 import PatientPage from "../pages/Patient";
-import { PatientInfoPage }  from "../pages/PatientInfo";
+import { PatientInfoPage } from "../pages/PatientInfo";
 import VisitPage from "../pages/VisitSummary";
 export const UnProtectedRoute = ({ children }: any) => {
     const session = useAuth();
@@ -35,24 +35,24 @@ export const ProtectedRoute = ({ children }: any) => {
     }
     return children;
 };
-export const PatientRoute = ({children}: any) => {
+export const PatientRoute = ({ children }: any) => {
     const session = useAuth();
-    const email = session?.user?.email??"";
+    const email = session?.user?.email ?? "";
     console.log(email);
     if (email.endsWith('health.gov')) {
-        return <Navigate to="/dashboard"/>;
+        return <Navigate to="/dashboard" />;
     }
     return children;
 }
 
-export const DoctorRoute = ({children}: any) => {
+export const DoctorRoute = ({ children }: any) => {
     const session = useAuth();
-    const email = session?.user?.email??"";
+    const email = session?.user?.email ?? "";
     console.log(email);
     if (email.endsWith('health.gov')) {
         return children;
     }
-    return <Navigate to="/dashboard"/>;
+    return <Navigate to="/dashboard" />;
 }
 
 export const router = createBrowserRouter([
@@ -88,15 +88,11 @@ export const router = createBrowserRouter([
 
             },
             {
-                path: "/visits/:visitId",
+                path: "patients/:patientId/visits/:visitId",
                 element: <VisitPage />,
 
             },
-            {
-                path: "/visits/:visitId",
-                element: <VisitPage />,
 
-            },
             {
                 path: "/schedule",
                 element: <SchedulePage />,

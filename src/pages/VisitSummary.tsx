@@ -12,7 +12,7 @@ import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import { Patient, PatientData } from '../models/Patient';
 import { getAge } from '../util/dates';
-import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, IconButton, InputLabel, MenuItem, Select, TextField, capitalize } from '@mui/material';
+import { Breadcrumbs, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, IconButton, InputLabel, Link, MenuItem, Select, TextField, Typography, capitalize } from '@mui/material';
 import { CloseOutlined } from '@mui/icons-material';
 import { useParams } from 'react-router-dom';
 import { usePatientService } from '../services/Patient';
@@ -25,6 +25,7 @@ import { Diagnosis } from '../models/Diagnosis';
 import { Visit } from '../models/Visit';
 import DiagnosisPoints from '../components/DiagnosisPoints';
 import { AddDiagnosisDialog } from '../components/AddDiagnosisDialog';
+import { BrowserRouter as Router, Link as RouterLink } from "react-router-dom";
 
 
 export default function VisitPage(props: any) {
@@ -64,9 +65,22 @@ export default function VisitPage(props: any) {
 
     return (
         <div className='p-12 w-full'>
-            <AppBreadcrumbs />
 
-            {visit && patient && illnesses && medications ? (
+
+            {visit && patient && illnesses && medications ? (<div>
+                <Breadcrumbs aria-label="breadcrumb">
+                    <Link underline="hover" color="inherit" to="/patients" component={RouterLink} >
+                        Patients
+                    </Link>
+
+                    <Link underline="hover" color="inherit" to={`/patients/${patient.id}`} component={RouterLink} >
+                        {patient.first_name} {patient.last_name}
+                    </Link>
+                    <Typography color="text.primary">  {capitalize(visit.type)} Visit</Typography>
+
+
+
+                </Breadcrumbs>
                 <div className='flex flex-col items-start justify-start w-full'>
                     <div className='flex flex-row items-center justify-start w-full border-b border-gray-300 mb-2 py-1'>
                         <h1 className='text-2xl font-semibold mr-auto'>
@@ -115,7 +129,7 @@ export default function VisitPage(props: any) {
                     </div>
                 </div>
 
-
+            </div>
             ) : <></>}
 
 

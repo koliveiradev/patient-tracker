@@ -36,6 +36,7 @@ export function DataTable(props: { setPatient: (patient: any) => void, patients:
 
             <DataGrid
                 autoHeight
+
                 rows={props.patients}
                 className='bg-white'
                 columns={columns}

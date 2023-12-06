@@ -19,7 +19,7 @@ export default function VisistTimeline(props: { visits: Visit[] }) {
     const navigate = useNavigate();
 
     const viewVisit = (visit: Visit) => {
-        navigate(`/visits/${visit.id}`);
+        navigate(`/patients/${visit.patient_id}/visits/${visit.id}`);
     }
 
     return (

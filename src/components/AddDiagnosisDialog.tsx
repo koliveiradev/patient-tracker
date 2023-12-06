@@ -1,4 +1,4 @@
-import { Dialog, DialogTitle, DialogContent, TextField, FormControl, InputLabel, Select, MenuItem, DialogActions, Button, Autocomplete } from "@mui/material";
+import { Dialog, DialogTitle, DialogContent, TextField, FormControl, InputLabel, Select, MenuItem, DialogActions, Button, Autocomplete, createFilterOptions } from "@mui/material";
 import { MobileDateTimePicker } from "@mui/x-date-pickers";
 import React from "react";
 import { usePatientService } from "../services/Patient";
@@ -39,6 +39,11 @@ export function AddDiagnosisDialog() {
     const handleClose = () => {
         setOpen(false);
     };
+    const OPTIONS_LIMIT = 10;
+    const defaultFilterOptions = createFilterOptions();
+    const filterOptions = (options: any, state: any) => {
+        return defaultFilterOptions(options, state).slice(0, OPTIONS_LIMIT);
+    };
 
     return (
         <div>
@@ -53,11 +58,13 @@ export function AddDiagnosisDialog() {
 
                         <Autocomplete options={
                             illnesses.map(i => i.name)
-                        } renderInput={(params) => <TextField {...params} label="Illness" />}
+                        } filterOptions={filterOptions}
+                            renderInput={(params) => <TextField {...params} label="Illness" />}
                         />
                         <Autocomplete options={
                             medications.map(i => i.name)
-                        } renderInput={(params) => <TextField {...params} label="Medication" />}
+                        } filterOptions={filterOptions}
+                            renderInput={(params) => <TextField {...params} label="Medication" />}
                         />
                         <TextField label='Notes' multiline minRows={3} />
                     </div>
