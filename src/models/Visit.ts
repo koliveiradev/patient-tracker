@@ -13,6 +13,14 @@ export interface Visit {
     diagnoses: Diagnosis[];
 }
 
+export interface VisitForm {
+    patient_id: number;
+    start_time: string;
+    doctor_id: number;
+    end_time: string;
+    type: string;
+}
+
 
 
 

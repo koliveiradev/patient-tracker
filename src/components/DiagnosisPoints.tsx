@@ -8,19 +8,26 @@ import TimelineDot from '@mui/lab/TimelineDot';
 import TimelineOppositeContent, {
     timelineOppositeContentClasses,
 } from '@mui/lab/TimelineOppositeContent';
-import { Button } from '@mui/material';
+import { Button, IconButton } from '@mui/material';
 import { Visit } from '../models/Visit';
 import dateFormat from 'dateformat';
 import { capitialize } from '../util/Text';
 import { useNavigate } from 'react-router-dom';
+import { Delete, DeleteOutline, Edit, EditAttributes, EditOutlined } from '@mui/icons-material';
+import { AddDiagnosisDialog, DiagnosisSubmitForm } from './AddDiagnosisDialog';
 
-export default function DiagnosisPoints(props: { visit: Visit }) {
+export default function DiagnosisPoints(props: { visit: Visit, onDelete: (id: number) => void }) {
 
-    const navigate = useNavigate();
 
+
+
+    const handleDelete = (id: number) => {
+        props.onDelete(id);
+    }
 
 
     return (
+
         <Timeline
             sx={{
                 [`& .${timelineItemClasses.root}:before`]: {
@@ -38,7 +45,7 @@ export default function DiagnosisPoints(props: { visit: Visit }) {
                         <TimelineConnector />
                     </TimelineSeparator>
                     <TimelineContent>
-                        <div className='flex flex-row gap-16'>
+                        <div className='flex flex-row justify-between items-start'>
 
 
                             <div>
@@ -72,6 +79,13 @@ export default function DiagnosisPoints(props: { visit: Visit }) {
                                         </div>
                                     })
                                 }
+
+                            </div>
+                            <div>
+
+                                <IconButton aria-label="delete" color='error' onClick={() => handleDelete(diagnosis.id)}>
+                                    <DeleteOutline />
+                                </IconButton>
                             </div>
                         </div>
                     </TimelineContent>
@@ -83,5 +97,6 @@ export default function DiagnosisPoints(props: { visit: Visit }) {
 
 
         </Timeline>
+
     );
 }

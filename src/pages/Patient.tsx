@@ -11,7 +11,7 @@ import { usePatientService } from '../services/Patient';
 import { AppBreadcrumbs } from '../components/BreadCrumbs';
 import VisistTimeline from '../components/VisitTimeline';
 import dateFormat, { masks } from "dateformat";
-import { AddVisitDialog } from '../components/AddVisitDialog';
+import { AddVisitDialog, VisitDialogForm } from '../components/AddVisitDialog';
 import { Diagnosis } from '../models/Diagnosis';
 import { Visit } from '../models/Visit';
 import { BrowserRouter as Router, Link as RouterLink } from "react-router-dom";
@@ -38,17 +38,39 @@ export default function PatientPage(props: any) {
     React.useEffect(
         () => {
             if (loading) {
-                service.getPatientData(patientId!).then((p) => {
-
-                    setPatient(p);
-                    setLoading(false);
-                    setDiagnoses(getCurrentDiagnoses(p.events));
-                });
+                refresh();
             }
 
 
         }
     );
+
+    const refresh = () => {
+        service.getPatientData(patientId!).then((p) => {
+
+            setPatient(p);
+            setLoading(false);
+            setDiagnoses(getCurrentDiagnoses(p.events));
+        });
+    }
+    const handleSubmit = (v: VisitDialogForm) => {
+
+        service.addVisit({
+            start_time: new Date(v.start_time).toISOString(),
+            end_time: new Date(v.start_time.getTime() + v.duration * 60000).toISOString(),
+            type: v.type,
+            patient_id: patient!.id!,
+            doctor_id: 1
+        }).then((v) => {
+            refresh();
+        });
+    }
+
+    const handleDelete = (id: number) => {
+        service.deleteVisit(id).then(() => {
+            refresh();
+        });
+    }
 
     return (
         <div className='p-12 w-full'>
@@ -125,10 +147,10 @@ export default function PatientPage(props: any) {
                                     Medical History
                                 </h1>
 
-                                <AddVisitDialog />
+                                <AddVisitDialog onSubmit={handleSubmit} />
 
                             </div>
-                            <VisistTimeline visits={patient.events} />
+                            <VisistTimeline visits={patient.events} onDelete={handleDelete} />
                         </div>
                     </div>
 

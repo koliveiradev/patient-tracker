@@ -20,11 +20,11 @@ import { AppBreadcrumbs } from '../components/BreadCrumbs';
 import VisistTimeline from '../components/VisitTimeline';
 import { DatePicker, DateTimePicker, MobileDateTimePicker, TimePicker } from '@mui/x-date-pickers';
 import dateFormat, { masks } from "dateformat";
-import { AddVisitDialog } from '../components/AddVisitDialog';
+import { AddVisitDialog, VisitDialogForm } from '../components/AddVisitDialog';
 import { Diagnosis } from '../models/Diagnosis';
 import { Visit } from '../models/Visit';
 import DiagnosisPoints from '../components/DiagnosisPoints';
-import { AddDiagnosisDialog } from '../components/AddDiagnosisDialog';
+import { AddDiagnosisDialog, DiagnosisSubmitForm } from '../components/AddDiagnosisDialog';
 import { BrowserRouter as Router, Link as RouterLink } from "react-router-dom";
 
 
@@ -40,28 +40,54 @@ export default function VisitPage(props: any) {
     React.useEffect(
         () => {
             if (loading) {
-                service.getVisit(visitId!).then(async (v) => {
-                    setVisit(v);
-                    setPatient(await service.getPatientData(v!.patient_id));
-                    setLoading(false);
-
-                });
-                service.getIllnesses().then((i) => {
-                    setIllnesses(i);
-                    setLoading(false);
-
-                });
-                service.getMedications().then((m) => {
-                    setMedications(m);
-                    setLoading(false);
-
-
-                });
+                refresh();
             }
 
 
         }
     );
+
+
+    const refresh = () => {
+        service.getVisit(visitId!).then(async (v) => {
+            setVisit(v);
+            setPatient(await service.getPatientData(v!.patient_id));
+            setLoading(false);
+
+        });
+        service.getIllnesses().then((i) => {
+            setIllnesses(i);
+            setLoading(false);
+
+        });
+        service.getMedications().then((m) => {
+            setMedications(m);
+            setLoading(false);
+
+
+        });
+    }
+
+    const handleSubmit = async (v: DiagnosisSubmitForm) => {
+
+        await service.addDiganosis({
+            illness_id: v.illness,
+            medication_id: v.medication,
+            start_date: v.start_date,
+            end_date: v.end_date,
+            notes: v.notes,
+            visit_id: visit!.id
+        });
+
+        refresh();
+
+    }
+
+
+    const handleDelete = async (id: number) => {
+        await service.deleteDiagnosis(id);
+        refresh();
+    }
 
     return (
         <div className='p-12 w-full'>
@@ -122,10 +148,10 @@ export default function VisitPage(props: any) {
                                 Diagnoses & Prescriptions
                             </h1>
 
-                            <AddDiagnosisDialog />
+                            <AddDiagnosisDialog onSubmit={handleSubmit} />
 
                         </div>
-                        <DiagnosisPoints visit={visit} />
+                        <DiagnosisPoints visit={visit} onDelete={handleDelete} />
                     </div>
                 </div>
 

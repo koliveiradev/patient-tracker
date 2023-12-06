@@ -8,18 +8,23 @@ import TimelineDot from '@mui/lab/TimelineDot';
 import TimelineOppositeContent, {
     timelineOppositeContentClasses,
 } from '@mui/lab/TimelineOppositeContent';
-import { Button } from '@mui/material';
+import { Button, IconButton } from '@mui/material';
 import { Visit } from '../models/Visit';
 import dateFormat from 'dateformat';
 import { capitialize } from '../util/Text';
 import { useNavigate } from 'react-router-dom';
+import { DeleteOutline } from '@mui/icons-material';
 
-export default function VisistTimeline(props: { visits: Visit[] }) {
+export default function VisistTimeline(props: { visits: Visit[], onDelete: (id: number) => void }) {
 
     const navigate = useNavigate();
 
     const viewVisit = (visit: Visit) => {
         navigate(`/patients/${visit.patient_id}/visits/${visit.id}`);
+    }
+
+    const handleDelete = (id: number) => {
+        props.onDelete(id);
     }
 
     return (
@@ -40,7 +45,7 @@ export default function VisistTimeline(props: { visits: Visit[] }) {
                         <TimelineConnector />
                     </TimelineSeparator>
                     <TimelineContent>
-                        <div className='flex flex-row gap-16'>
+                        <div className='flex flex-row items-start justify-between'>
                             <div>
                                 <div className='font-semibold'>
                                     {capitialize(visit.type)} Visit
@@ -91,6 +96,9 @@ export default function VisistTimeline(props: { visits: Visit[] }) {
                                     })
                                 }
                             </div>
+                            <IconButton aria-label="delete" color='error' onClick={() => handleDelete(visit.id)}>
+                                <DeleteOutline />
+                            </IconButton>
                         </div>
                     </TimelineContent>
                 </TimelineItem>
