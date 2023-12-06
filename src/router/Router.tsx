@@ -93,6 +93,11 @@ export const router = createBrowserRouter([
 
             },
             {
+                path: "/visits/:visitId",
+                element: <VisitPage />,
+
+            },
+            {
                 path: "/schedule",
                 element: <SchedulePage />,
             },

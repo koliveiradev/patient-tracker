@@ -21,29 +21,28 @@ export interface Prescription {
 }
 
 export function PrescriptionBox(prescriptionList: PrescriptionBoxProps) {
-  return (
-    <Box sx={{ backgroundColor: 'white', borderRadius: '10px', padding: '20px', border: '1px solid lightgrey'}}>
-      <Box display='flex' alignItems='center'>
-        <Stack direction="row" spacing={20}>
-          <Typography variant='h4' align='left'>
+  return (<>
+    <div className='  border border-gray-200 rounded-lg w-full p-4 bg-white mt-8 '>
+    <div className='flex flex-row gap-8 border-b border-gray-300 mb-4 pb-3 items-center '>
+        <h1 className='text-xl font-semibold '>
             Prescriptions
-          </Typography>
-          <MedicationIcon />
-        </Stack>
-      </Box>
-      <Divider style={{ backgroundColor: 'grey' }} />
-      <Typography variant="body1" align="left">
-        <List>
-          {prescriptionList.prescriptions.map((prescription: Prescription) => (
-            <ListItem key={prescription.id}>
-              <ListItemIcon>
-                <FiberManualRecordIcon sx={{ fontSize: 'small' }} />
-              </ListItemIcon>
-              <ListItemText primary={prescription.name} secondary={`Prescribed on ${prescription.prescribedOn}`} />
-            </ListItem>
-          ))}
-        </List>
-      </Typography>
-    </Box>
+        </h1>
+    </div>
+        {prescriptionList.prescriptions.length === 0 ? (
+          <>You have no prescriptions.</>
+        ) : (
+          <List>
+            {prescriptionList.prescriptions.map((prescription: Prescription) => (
+              <ListItem key={prescription.id}>
+                <ListItemIcon>
+                  <FiberManualRecordIcon sx={{ fontSize: 'small' }} />
+                </ListItemIcon>
+                <ListItemText primary={prescription.name} secondary={`Prescribed on ${prescription.prescribedOn}`} />
+              </ListItem>
+            ))}
+          </List>
+        )}
+    </div>
+    </>
   );
 };
