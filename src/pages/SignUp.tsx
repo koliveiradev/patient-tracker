@@ -19,7 +19,6 @@ export default function SignUp() {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault(); // Prevent the default form submission behavior
-    console.log('rocks');
     await authService.signUpWithEmail(email, password, firstName, lastName, birthDate, sex, phone, insurance);
   };
 
@@ -33,7 +32,7 @@ export default function SignUp() {
         </svg>
 
         <h2 className="mt-4 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-            Signup Doctor Dashboard
+            Patient Signup
         </h2>
     </div>
 
