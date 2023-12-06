@@ -93,9 +93,7 @@ export function DashboardPage(props: Props) {
                 </Box>
                 : 
                 <>
-                    <Box sx={{ margin:'20px', display:'flex', width:'100%'}}>
-                        <PrescriptionBox prescriptions={ userPrescriptions }/>
-                    </Box>
+                    <PrescriptionBox prescriptions={ userPrescriptions }/>
 
                     <EventsSchedule events={events!}/>
                 </>
