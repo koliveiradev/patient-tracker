@@ -3,13 +3,9 @@ import { supabase } from "../components/AuthBuilder";
 import { createContext, useContext } from "react";
 import { Patient } from "../models/Patient";
 
-<<<<<<< HEAD
-export class PatientService {
-=======
 
 
 export class DatabaseService {
->>>>>>> main
 
     async getPatients(): Promise<any> {
         const { data, error } = await supabase.from('patients').select('*');
@@ -44,6 +40,25 @@ export class DatabaseService {
         const { data, error } = await supabase.from('patients').select('*, events ( *, diagnoses ( *, illness:illness_id ( * ), prescriptions (*,medication:medication_id(*)) ) )').filter('id', 'eq', id).limit(1).single();
         console.log(data);
         return data;
+    }
+
+    async getUpcomingEvents(id: string): Promise<any> {
+        const { data, error } = await supabase.from('event_doctor_view')
+            .select('*')
+            .filter('patient_id', 'eq', id)
+            // .filter('start_date', 'gte', new Date())
+            // .order('start_date', { ascending: true })
+            // .limit(10);
+
+        // filter on Date
+        const today = new Date();
+        const filteredData = (data == null)? null : data.filter((e: any) => {
+            console.log(e);
+            return new Date(e.end_time) >= today;
+        });
+
+        console.log("getUpcomingEvents", filteredData);
+        return filteredData;
     }
 
     async getVisit(id: string): Promise<any> {
@@ -91,6 +106,5 @@ export function PatientServiceProvider(props: any) {
     </authServiceContext.Provider>)
 
 }
-
 
 
