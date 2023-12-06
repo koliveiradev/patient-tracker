@@ -12,6 +12,9 @@ export default function Login() {
     const handleSubmit = async (e: any) => {
 
         await authService.signInWithEmail(email, password);
+
+        const { data: { user } } = await supabase.auth.getUser();
+        console.log(user?.id)
     }
 
     const handleEmailChange = (e: any) => {

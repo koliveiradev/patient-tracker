@@ -8,6 +8,7 @@ import SignUp from "../pages/SignUp";
 import { useAuth } from "../components/AuthBuilder";
 import Login from "../pages/Login";
 import PatientPage from "../pages/Patient";
+import { PatientInfoPage }  from "../pages/PatientInfo";
 import VisitPage from "../pages/VisitSummary";
 export const UnProtectedRoute = ({ children }: any) => {
     const session = useAuth();
@@ -34,6 +35,25 @@ export const ProtectedRoute = ({ children }: any) => {
     }
     return children;
 };
+export const PatientRoute = ({children}: any) => {
+    const session = useAuth();
+    const email = session?.user?.email??"";
+    console.log(email);
+    if (email.endsWith('health.gov')) {
+        return <Navigate to="/dashboard"/>;
+    }
+    return children;
+}
+
+export const DoctorRoute = ({children}: any) => {
+    const session = useAuth();
+    const email = session?.user?.email??"";
+    console.log(email);
+    if (email.endsWith('health.gov')) {
+        return children;
+    }
+    return <Navigate to="/dashboard"/>;
+}
 
 export const router = createBrowserRouter([
     // {
@@ -59,13 +79,17 @@ export const router = createBrowserRouter([
             },
             {
                 path: "/patients",
-                element: <PatientsPage />,
-
+                element: <DoctorRoute><PatientsPage /></DoctorRoute>,
 
             },
             {
                 path: "/patients/:patientId",
-                element: <PatientPage />,
+                element: <DoctorRoute><PatientPage /></DoctorRoute>,
+
+            },
+            {
+                path: "/visits/:visitId",
+                element: <VisitPage />,
 
             },
             {
@@ -80,7 +104,11 @@ export const router = createBrowserRouter([
             {
                 path: "/medications",
                 element: <MedicationsPage />,
-            }
+            },
+            {
+                path: "/personalinfo",
+                element: <PatientRoute><PatientInfoPage /></PatientRoute>,
+            },
         ]
     },
 ]);
