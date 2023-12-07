@@ -26,6 +26,7 @@ import { Patient } from '../models/Patient';
 import { Event } from '../models/Event';
 import { PrescriptionBox, Prescription } from '../components/PrescriptionBox'
 import { supabase } from '../components/AuthBuilder';
+import { usePatientService } from '../services/Patient'
 import { DatabaseService } from '../services/Patient'
 import { EventsSchedule } from '../components/EventsSchedule';
 import { CircularProgress } from '@mui/material';
@@ -51,6 +52,7 @@ export function DashboardPage(props: Props) {
     const [isRendered, setIsRendered] = React.useState(false);
     const [isDoctor, setIsDoctor] = React.useState(false);
     const [userPrescriptions, setUserPrescriptions] = React.useState([]);
+    var serivce = usePatientService();
     const [events, setEvents] = React.useState<Event[]>([]);
 
     React.useEffect(() => {
@@ -74,7 +76,6 @@ export function DashboardPage(props: Props) {
                 console.log('error :( ' + error);
             }
         };
-        var serivce = new DatabaseService();
         
         // console.log(data);
         fetchData();
@@ -93,6 +94,7 @@ export function DashboardPage(props: Props) {
                 </Box>
                 : 
                 <>
+
                     <PrescriptionBox prescriptions={ userPrescriptions }/>
 
                     <EventsSchedule events={events!}/>

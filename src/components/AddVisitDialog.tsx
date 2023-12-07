@@ -1,9 +1,26 @@
 import { Dialog, DialogTitle, DialogContent, TextField, FormControl, InputLabel, Select, MenuItem, DialogActions, Button } from "@mui/material";
 import { MobileDateTimePicker } from "@mui/x-date-pickers";
+import dayjs from "dayjs";
 import React from "react";
 
-export function AddVisitDialog() {
+
+export interface VisitDialogForm {
+    type: string;
+    start_time: Date;
+    duration: number;
+
+}
+export function AddVisitDialog(props: { onSubmit: (form: VisitDialogForm) => void }) {
     const [open, setOpen] = React.useState(false);
+    const [form, setForm] = React.useState<VisitDialogForm>({
+        type: 'Physical',
+        start_time: new Date(),
+        duration: 30
+    });
+
+    const handleFormChange = (e: VisitDialogForm) => {
+        setForm(e);
+    };
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -12,6 +29,13 @@ export function AddVisitDialog() {
     const handleClose = () => {
         setOpen(false);
     };
+
+    const handleSubmit = () => {
+        props.onSubmit(form);
+        setOpen(false);
+    }
+
+
 
     return (
         <div>
@@ -30,8 +54,8 @@ export function AddVisitDialog() {
                                 id="demo-simple-select"
                                 value={'Physical'}
                                 label="Visit Type"
-                                onChange={(age) => {
-
+                                onChange={(type) => {
+                                    handleFormChange({ ...form, type: type.target.value as string });
                                 }}
                             >
                                 <MenuItem value={'Physical'}>Physical</MenuItem>
@@ -39,7 +63,7 @@ export function AddVisitDialog() {
 
                             </Select>
                         </FormControl>
-                        <MobileDateTimePicker label="Event Date Time" className='w-full' orientation="landscape" views={[
+                        <MobileDateTimePicker value={dayjs(form.start_time)} label="Event Date Time" className='w-full' orientation="landscape" views={[
                             "year",
                             "month",
                             "day",
@@ -47,7 +71,12 @@ export function AddVisitDialog() {
                             "minutes",
 
 
-                        ]} />
+                        ]} onChange={(e) => {
+                            if (e) {
+                                handleFormChange({ ...form, start_time: (e.toDate() as Date) });
+
+                            }
+                        }} />
                         <FormControl fullWidth >
                             <InputLabel id="demo-simple-select-label">Duration</InputLabel>
                             <Select
@@ -55,7 +84,8 @@ export function AddVisitDialog() {
                                 id="demo-simple-select"
                                 value={30}
                                 label="Duration"
-                                onChange={(age) => {
+                                onChange={(duration) => {
+                                    handleFormChange({ ...form, duration: duration.target.value as number });
 
                                 }}
                             >
@@ -74,7 +104,7 @@ export function AddVisitDialog() {
                     <button className="px-4 py-2 text-gray-500" onClick={handleClose}>
                         Cancel
                     </button>
-                    <button className="px-4 py-2 text-white bg-primary rounded-lg shadow-sm font-semibold" onClick={handleClose}>
+                    <button className="px-4 py-2 text-white bg-primary rounded-lg shadow-sm font-semibold" onClick={handleSubmit}>
                         Create
                     </button>
 
