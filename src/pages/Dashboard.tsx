@@ -82,8 +82,8 @@ export function DashboardPage(props: Props) {
         setIsRendered(true);
     }, []);
 
-    return <>
-        <div className="p-8 h-screen w-full">
+    return <main>
+        <div className="p-8 h-screen w-full" role="dashboard">
             <div>
                 <h1 className='text-2xl font-semibold'>Dashboard</h1>
                 <div className='border-b border-gray-300 w-full mb-8 mt-4' />
@@ -101,6 +101,6 @@ export function DashboardPage(props: Props) {
                 </>
             }
         </div>;
-    </>
+    </main>
                 
 }

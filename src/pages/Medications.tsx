@@ -29,13 +29,13 @@ export function MedicationsPage(props: any) {
         }
     );
 
-    return <div className="p-8 h-screen w-full">
+    return <main className="p-8 h-screen w-full">
         <div>
             <h1 className='text-2xl font-semibold'>Medications</h1>
             <div className='border-b border-gray-300 w-full mb-8 mt-4' />
         </div>
         <DataTable setPatient={handleSetPatient} medications={medications}></DataTable>
-    </div>;
+    </main>;
 
 }
 
