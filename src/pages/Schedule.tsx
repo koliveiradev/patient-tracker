@@ -42,7 +42,7 @@ export function SchedulePage(props: any) {
             title: v.patient.first_name + " " + v.patient.last_name + " | " + capitalize(v.type),
         }
     });
-    return <div className='h-screen p-8 w-full flex flex-col'>
+    return <main className='h-screen p-8 w-full flex flex-col'>
         <div>
             <h1 className='text-2xl font-semibold'>Schedule</h1>
             <div className='border-b border-gray-300 w-full mb-8 mt-4' />
@@ -61,7 +61,7 @@ export function SchedulePage(props: any) {
                 style={{ height: '600px' }}
             />
         </div>
-    </div>;
+    </main>;
 
 }
 

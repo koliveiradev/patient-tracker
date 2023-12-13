@@ -90,7 +90,7 @@ export default function VisitPage(props: any) {
     }
 
     return (
-        <div className='p-12 w-full'>
+        <main className='p-12 w-full'>
 
 
             {visit && patient && illnesses && medications ? (<div>
@@ -161,7 +161,7 @@ export default function VisitPage(props: any) {
 
 
 
-        </div>
+        </main>
     );
 }
 
