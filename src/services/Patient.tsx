@@ -65,18 +65,19 @@ export class DatabaseService {
     }
 
     async getUpcomingEvents(id: string): Promise<any> {
-        const { data, error } = await supabase.from('event_doctor_view')
+ 
+        // do filtering in supabase query
+        const currentTime = new Date().toISOString();
+        const { data, error } = await supabase
+            .from('event_doctor_view')
             .select('*')
-            .filter('patient_id', 'eq', id)
-        // .filter('start_date', 'gte', new Date())
-        // .order('start_date', { ascending: true })
-        // .limit(10);
+            .eq('patient_id', id)
+            .gt('end_time', currentTime);
 
-        // filter on Date
-        const today = new Date();
-        const filteredData = (data == null) ? null : data.filter((e: any) => {
-            return new Date(e.end_time) >= today;
-        });
+        console.log(data);
+    
+
+        const filteredData = data;        
 
         return filteredData;
     }
