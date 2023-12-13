@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+# Patient Tracker App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Developed by THE SILICON SAVANTS, this application is designed for smaller medical entities in Western Massachusetts, designed to streamline the management of patient information and medical records. The primary goal is to provide doctors with a convenient and efficient way to access and update patient records during checkups. By digitizing the process, the application eliminates the need for manual paperwork and enhances the overall patient care experience. Manually transferring paperwork is slow and error prone. When it comes to medical issues, errors regarding prescriptions, and medical history can lead to dangerous misdiagnoses. Having a tested digitized patient tracking system, drastically reduces this risk of error. Furthermore, it reduces the workload of medical workers, allowing them to focus on more important work. Likewise, it allows users to easily check their appointments and to fill out forms, allowing them to best prepare for their upcoming appointment(s).
 
 ## Available Scripts
 
@@ -28,16 +28,6 @@ The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
 ## Learn More
 
